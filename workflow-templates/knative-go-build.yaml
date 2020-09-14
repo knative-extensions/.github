@@ -47,7 +47,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Build & Vet
+      - name: Build
         run: |
           tags="$(grep -I  -r '// +build' . | \
                 grep -v '^./vendor/' | \
@@ -58,6 +58,6 @@ jobs:
                 grep -v '^!' | \
                 tr '\n' ' ')"
 
-          echo "Running vet with tags: ${tags}"
-          go vet -tags "${tags}" ./...
+          echo "Building with tags: ${tags}"
+          go test -vet=off -tags "${tags}" -run=^$ ./... | grep -v "no test"
 

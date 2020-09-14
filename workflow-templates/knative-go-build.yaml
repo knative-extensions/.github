@@ -47,5 +47,17 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Build
-        run: go build -v ./...
+      - name: Build & Vet
+        run: |
+          tags="$(grep -I  -r '// +build' . | \
+                grep -v '^./vendor/' | \
+                grep -v '^./hack/' | \
+                grep -v '^./third_party' | \
+                cut -f3 -d' ' | \
+                sort | uniq | \
+                grep -v '^!' | \
+                tr '\n' ' ')"
+
+          echo "Running vet with tags: ${tags}"
+          go vet -tags "${tags}" ./...
+

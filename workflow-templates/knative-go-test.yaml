@@ -18,13 +18,17 @@
 name: Test
 
 on:
+
+  push:
+    branches: [ 'master' ]
+
   pull_request:
     branches: [ 'master', 'release-*' ]
 
 jobs:
 
   test:
-    name: Test
+    name: Unit Tests
     strategy:
       matrix:
         go-version: [1.14.x]

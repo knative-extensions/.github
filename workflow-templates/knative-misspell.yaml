@@ -36,8 +36,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      # This is mostly copied from https://github.com/get-woke/woke-action-reviewdog/blob/main/entrypoint.sh
-      # since their action is not yet released under a stable version.
       - name: misspell
         shell: bash
         env:

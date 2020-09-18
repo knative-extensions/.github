@@ -1,5 +1,0 @@
-{
-    "name": "Knative misspell workflow",
-    "description": "Identify common misspellings using github.com/client9/misspell.",
-    "iconName": "blender"
-}

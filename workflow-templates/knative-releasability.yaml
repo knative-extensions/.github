@@ -23,15 +23,14 @@ on:
 
   workflow_dispatch:      # Manual trigger.
     inputs:
-      release:
-        description: 'Release (vX.Y)?'
-        required: true
-        default: 'v0.18'
-      slackChannel:
-        description: 'Slack Channel?'
-        required: true
-        default: 'release-18'
-
+      release:                         #######################################
+        description: 'Release? (vX.Y)' #  Update this section each release.  #
+        default: 'v0.18'               #   <-- Release Family                #
+        required: true                 #                                     #
+      slackChannel:                    #                                     #
+        description: 'Slack Channel? (release-#)'                            #
+        default: 'release-18'          #   <-- Release Channel               #
+        required: true                 #######################################
 jobs:
   releasability:
     name: Releasability

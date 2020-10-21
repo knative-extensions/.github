@@ -19,7 +19,7 @@ name: 'Releasability'
 
 on:
   schedule:
-    - cron: '0 5 * * 1-5' # 5am, robot time, weekdays.
+    - cron: '0 1 * * 1-5' # 6am Pacific, weekdays.
 
   workflow_dispatch:      # Manual trigger.
     inputs:

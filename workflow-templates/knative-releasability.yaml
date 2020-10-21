@@ -21,7 +21,16 @@ on:
   schedule:
     - cron: '0 5 * * 1-5' # 5am, robot time, weekdays.
 
-  workflow_dispatch:    # Manual trigger.
+  workflow_dispatch:      # Manual trigger.
+    inputs:
+      release:
+        description: 'Release (vX.Y)?'
+        required: true
+        default: 'v0.18'
+      slackChannel:
+        description: 'Slack Channel?'
+        required: true
+        default: 'release-18'
 
 jobs:
   releasability:
@@ -29,11 +38,8 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     env:
-  #########################################
-  #   Update this section each release.   #
-      RELEASE: v0.19
-      SLACK_CHANNEL: 'release-19'
-  #########################################
+      RELEASE: "${{ github.event.inputs.release }}"
+      SLACK_CHANNEL: "${{ github.event.inputs.channel }}"
 
     steps:
       - name: Set up Go 1.15.x
@@ -52,15 +58,15 @@ jobs:
         run: |
           EXISTS=0
           buoy exists go.mod --release ${RELEASE} --verbose || EXISTS=$?
-          if [[ EXISTS == 0 ]]; then
-            EXISTS='true'
+          if [[ "$EXISTS" -eq "0" ]]; then
+            EXISTS=true
           else
-            EXISTS='false'
+            EXISTS=false
           fi
-          echo ::set-output name=branch::${EXISTS}
+          echo ::set-output name=release-branch::${EXISTS}
 
       - name: Check
-        if: steps.exists.outputs.branch != 'true'
+        if: steps.exists.outputs.release-branch == 'false'
         run: |
           # The following pushes the stdout of buoy into $CHECK_MESSAGE
           CHECK=0
@@ -78,7 +84,7 @@ jobs:
           fi
 
       - name: Upgrade
-        if: steps.exists.outputs.branch != 'true' && env.current == 'true'
+        if: steps.exists.outputs.release-branch == 'false' && env.current == 'true'
         run: |
           # if update deps returns un-successful, then mark current to false.
           if ! ./hack/update-deps.sh --release ${RELEASE} --upgrade; then
@@ -87,7 +93,7 @@ jobs:
           fi
 
       - name: Verify
-        if: steps.exists.outputs.branch != 'true' && env.current == 'true'
+        if: steps.exists.outputs.release-branch == 'false' && env.current == 'true'
         run: |
           # If we see no changes after the upgrade, then we are up to date.
           if [[ -z "$(git status --porcelain)" ]]; then
@@ -98,19 +104,19 @@ jobs:
           fi
 
       - name: Status GO
-        if: steps.exists.outputs.branch != 'true' && env.current == 'true'
+        if: steps.exists.outputs.release-branch == 'false' && env.current == 'true'
         run: |
           echo 'SLACK_COLOR=#098e00' >> $GITHUB_ENV
           echo 'SLACK_TITLE=Releasability for ${{ github.repository }} @ ${{ env.RELEASE }} is GO!' >> $GITHUB_ENV
 
       - name: Status NO-GO
-        if: steps.exists.outputs.branch != 'true' && env.current == 'false'
+        if: steps.exists.outputs.release-branch == 'false' && env.current == 'false'
         run: |
           echo 'SLACK_COLOR=#8E1600' >> $GITHUB_ENV
           echo 'SLACK_TITLE=Releasability for ${{ github.repository }} @ ${{ env.RELEASE }} is NO-GO!' >> $GITHUB_ENV
 
-      - name: Post notice to Slack
-        if: steps.exists.outputs.branch != 'true'
+      - name: Post status to Slack
+        if: steps.exists.outputs.release-branch == 'false'
         uses: rtCamp/action-slack-notify@v2.1.0
         env:
           SLACK_ICON: http://github.com/knative.png?size=48

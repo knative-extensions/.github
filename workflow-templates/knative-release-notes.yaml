@@ -25,10 +25,10 @@ on:
         required: true
         default: 'master'
       start-sha:
-        description: 'Start SHA? [inclusive]'
+        description: 'Starting SHA? [inclusive]'
         required: true
       end-sha:
-        description: 'End SHA? [inclusive]'
+        description: 'Ending SHA? [inclusive]'
         required: true
 
 jobs:

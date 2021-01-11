@@ -145,7 +145,7 @@ jobs:
           # paths until we update all .gitattributes
           git ls-files |
           git check-attr --stdin linguist-generated | grep -Ev ': (set|true)$ | cut -d: -f1 |
-          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ |
+          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ | cut -d: -f1 |
           grep -Ev '^(vendor/|third_party/|.git)' |
           xargs misspell -error |
           reviewdog -efm="%f:%l:%c: %m" \
@@ -174,7 +174,7 @@ jobs:
           # paths until we update all .gitattributes
           git ls-files |
           git check-attr --stdin linguist-generated | grep -Ev ': (set|true)$ | cut -d: -f1 |
-          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ |
+          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ | cut -d: -f1 |
           grep -Ev '^(vendor/|third_party/|.git)' |
           xargs grep -nE " +$" |
           reviewdog -efm="%f:%l:%m" \
@@ -205,7 +205,7 @@ jobs:
           #  - no *.ai (Adobe Illustrator) files.
           LINT_FILES=$(git ls-files |
           git check-attr --stdin linguist-generated | grep -Ev ': (set|true)$ | cut -d: -f1 |
-          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ |
+          git check-attr --stdin linguist-vendored | grep -Ev ': (set|true)$ | cut -d: -f1 |
           grep -Ev '^(vendor/|third_party/|\.git)') |
           grep -v '\.ai$')
 

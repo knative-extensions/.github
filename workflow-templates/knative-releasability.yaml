@@ -114,7 +114,7 @@ jobs:
           CHANGED="$(git diff-index --name-only HEAD --)"
 
           # If we see no changes after the upgrade, then we are up to date.
-          if [[ "$CHANGED" -eq "" ]]; then
+          if [[ "$CHANGED" == "" ]]; then
               echo "VERIFY_MESSAGE=${{ github.repository }} up to date." >> $GITHUB_ENV
           else
               echo "VERIFY_MESSAGE=${{ github.repository }} is out of date." >> $GITHUB_ENV

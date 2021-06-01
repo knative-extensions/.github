@@ -17,12 +17,7 @@
 
 name: 'Security'
 
-on:
-  push:
-    branches: [ 'main', 'master', 'release-*', 'mkdocs' ]
-
-  pull_request:
-    branches: [ 'main', 'master', 'release-*', 'mkdocs' ]
+on: [push, pull_request]
 
 jobs:
   analyze:

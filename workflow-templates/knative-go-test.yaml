@@ -20,10 +20,10 @@ name: Test
 on:
 
   push:
-    branches: [ 'main', 'master', 'mkdocs' ]
+    branches: [ 'main', 'mkdocs' ]
 
   pull_request:
-    branches: [ 'main', 'master', 'release-*', 'mkdocs' ]
+    branches: [ 'main', 'release-*', 'mkdocs' ]
 
 jobs:
 

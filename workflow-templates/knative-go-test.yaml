@@ -53,7 +53,7 @@ jobs:
         run: |
           git remote add upstream https://github.com/${{ github.repository }}.git
           git fetch upstream ${{ github.base_ref }}
-          git pull --no-rebase --no-commit upstream ${{ github.base_ref }} || git reset --hard HEAD
+          git pull --no-rebase --no-commit upstream ${{ github.base_ref }}
         shell: bash
 
       - name: Check for .codecov.yaml

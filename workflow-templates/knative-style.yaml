@@ -120,7 +120,7 @@ jobs:
           echo '::endgroup::'
 
           echo '::group:: Installing misspell ... https://github.com/client9/misspell'
-          curl -sfL https://git.io/misspell | sh -s -- -b "${TEMP_PATH}" 2>&1
+          curl -sfL https://raw.githubusercontent.com/client9/misspell/master/install-misspell.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
           echo '::endgroup::'
 
           echo '::group:: Installing woke ... https://github.com/get-woke/woke'

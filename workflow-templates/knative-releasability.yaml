@@ -36,7 +36,7 @@ jobs:
     env:
       #########################################
       #   Update this section each release.   #
-      RELEASE: 'v0.27'
+      RELEASE: 'v1.0'
       SLACK_CHANNEL: 'release-27'
       #########################################
 

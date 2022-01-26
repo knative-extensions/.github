@@ -60,7 +60,7 @@ jobs:
       run: touch .unicode-control-characters.config.py
 
     - name: Find Unicode Control Characters
-      uses: pierdipi/unicode-control-characters-action@v0.1.1
+      uses: pierdipi/unicode-control-characters-action@release-0.1
       with:
         args: --detailed --config .unicode-control-characters.config.py .
 

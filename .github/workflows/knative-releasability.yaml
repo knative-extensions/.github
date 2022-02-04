@@ -12,23 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file is automagically synced here from github.com/knative-sandbox/.github
-# repo by knobots: https://github.com/knative-sandbox/knobots and will be overwritten.
-
 name: 'Releasability'
 
 on:
-  schedule:
-    - cron: '0 1 * * 1-5' # 6am Pacific, weekdays.
-
-  workflow_dispatch:      # Manual trigger.
-    inputs:
-      releaseFamily:
-        description: 'Release? (vX.Y)'
-      moduleReleaseFamily:
-        description: 'Module Release? (vX.Y)'
-      slackChannel:
-        description: 'Slack Channel? (release-#)'
+  workflow_call: {}
 
 jobs:
   releasability:

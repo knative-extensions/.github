@@ -12,22 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file is automagically synced here from github.com/knative-sandbox/.github
-# repo by knobots: https://github.com/knative-sandbox/knobots and will be overwritten.
-
 name: 'Release Notes'
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch'
-        required: true
-        default: 'main'
-      start-rev:
-        description: 'Start Tag (defaults to merge-base(branch, prev-branch))'
-      end-rev:
-        description: 'End Tag (defaults to HEAD of the target branch)'
+  workflow_call: {}
 
 jobs:
   release-notes:

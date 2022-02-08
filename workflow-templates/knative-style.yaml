@@ -23,5 +23,5 @@ on:
 
 jobs:
 
-  autoformat-and-lint:
+  style:
     uses: knative-sandbox/.github/.github/workflows/knative-style.yaml@main

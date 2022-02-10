@@ -1,0 +1,40 @@
+# Copyright 2020 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This file is automagically synced here from github.com/knative-sandbox/.github
+# repo by knobots: https://github.com/knative-sandbox/knobots and will be overwritten.
+
+name: OK to test label enable actions for first time contributors
+
+on:
+  pull_request_target:
+    types: [labeled]
+    branches: [ 'main', 'master', 'release-*' ]
+
+jobs:
+  check-ok-to-test-label:
+    name: Check ok-to-test label
+    if: github.event.label.name == 'ok-to-test'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+    - name: Approve workflow runs for new contributors
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -x
+        RUNS_URL='${{ github.event.repository.url }}/actions/runs?branch=${{ github.event.pull_request.head.ref }}&status=action_required&event=pull_request'
+        gh api --jq '.workflow_runs.[] | select(.head_sha == "${{ github.event.pull_request.head.sha }}").url + "/approve"' $RUNS_URL | xargs -L1 gh api -XPOST

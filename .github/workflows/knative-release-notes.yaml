@@ -15,7 +15,20 @@
 name: 'Release Notes'
 
 on:
-  workflow_call: {}
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      start-rev:
+        required: false
+        type: string
+      end-rev:
+        required: false
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   release-notes:
@@ -49,10 +62,10 @@ jobs:
 
           export ORG=$(echo '${{ github.repository }}' | awk -F '/' '{print $1}')
           export REPO=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')
-          export BRANCH="${{ github.event.inputs.branch }}"
+          export BRANCH="${{ inputs.branch }}"
 
-          export START_REV=${{ github.event.inputs.start-rev }}
-          export END_REV=${{ github.event.inputs.end-rev }}
+          export START_REV=${{ inputs.start-rev }}
+          export END_REV=${{ inputs.end-rev }}
 
           if [[ -z "$END_REV" ]]; then
             END_REV="origin/$BRANCH"

@@ -15,7 +15,20 @@
 name: 'Releasability'
 
 on:
-  workflow_call: {}
+  workflow_call:
+    inputs:
+      releaseFamily:
+        type: string
+        required: false
+      moduleReleaseFamily:
+        type: string
+        required: false
+      slackChannel:
+        type: string
+        required: false
+    secrets:
+      SLACK_WEBHOOK:
+        required: true
 
 jobs:
   releasability:
@@ -34,14 +47,14 @@ jobs:
       - name: Defaults
         run: |
           # If manual trigger sent releaseFamily, moduleReleaseFamily and slackChannel, then override them
-          if [[ "${{ github.event.inputs.releaseFamily }}" != "" ]]; then
-            echo "RELEASE=${{ github.event.inputs.releaseFamily }}" >> $GITHUB_ENV
+          if [[ "${{ inputs.releaseFamily }}" != "" ]]; then
+            echo "RELEASE=${{ inputs.releaseFamily }}" >> $GITHUB_ENV
           fi
-          if [[ "${{ github.event.inputs.moduleReleaseFamily }}" != "" ]]; then
-            echo "MODULE_RELEASE=${{ github.event.inputs.moduleReleaseFamily }}" >> $GITHUB_ENV
+          if [[ "${{ inputs.moduleReleaseFamily }}" != "" ]]; then
+            echo "MODULE_RELEASE=${{ inputs.moduleReleaseFamily }}" >> $GITHUB_ENV
           fi
-          if [[ "${{ github.event.inputs.slackChannel }}" != "" ]]; then
-            echo "SLACK_CHANNEL=${{ github.event.inputs.slackChannel }}" >> $GITHUB_ENV
+          if [[ "${{ inputs.slackChannel }}" != "" ]]; then
+            echo "SLACK_CHANNEL=${{ inputs.slackChannel }}" >> $GITHUB_ENV
           fi
           if [[ "${{ secrets.SLACK_WEBHOOK }}" != "" ]]; then
             echo "SLACK_WEBHOOK=exists" >> $GITHUB_ENV

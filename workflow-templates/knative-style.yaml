@@ -25,3 +25,5 @@ jobs:
 
   style:
     uses: knative-sandbox/.github/.github/workflows/knative-style.yaml@main
+    secrets:
+      token: ${{ github.token }}

@@ -40,3 +40,5 @@ jobs:
       releaseFamily: ${{ github.event.inputs.releaseFamily }}
       moduleReleaseFamily: ${{ github.event.inputs.moduleReleaseFamily }}
       slackChannel: ${{ github.event.inputs.slackChannel }}
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

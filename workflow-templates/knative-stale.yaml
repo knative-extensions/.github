@@ -25,5 +25,3 @@ jobs:
 
   stale:
     uses: knative/actions/.github/workflows/stale.yaml@main
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

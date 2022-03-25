@@ -22,6 +22,5 @@ on:
     branches: [ 'main', 'master', 'release-*' ]
 
 jobs:
-
   verify:
     uses: knative/actions/.github/workflows/verify-codegen.yaml@main

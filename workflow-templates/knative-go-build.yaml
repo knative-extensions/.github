@@ -22,6 +22,5 @@ on:
     branches: [ 'main', 'master', 'release-*' ]
 
 jobs:
-
   build:
     uses: knative/actions/.github/workflows/go-build.yaml@main

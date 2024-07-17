@@ -1,6 +1,7 @@
 changelog:
   exclude:
     authors:
+      - dependabot
       - knative-automation
   categories:
     - title: 🚨 Breaking or Notable Changes
